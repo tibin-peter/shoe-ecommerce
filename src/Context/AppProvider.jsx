@@ -6,12 +6,12 @@ import toast from "react-hot-toast";
 const API_URL = "http://localhost:3001";
 
 const AppProvider = ({ children }) => {
-  const [user, setUser] = useState(null); // stored in localStorage
   const [wishlist, setWishlist] = useState([]);
   const [cart, setCart] = useState([]);
   const [orders, setOrders] = useState([]);
   const navigate = useNavigate();
-  const [loading,setLoading]=useState(true)
+  const [loading, setLoading] = useState(true);
+  const [user, setUser] = useState(null); // stored in localStorage
 
   // Load session from localStorage
   useEffect(() => {
@@ -19,9 +19,13 @@ const AppProvider = ({ children }) => {
     if (savedUser) {
       const parsedUser = JSON.parse(savedUser);
       setUser(parsedUser);
-      fetchUserData(parsedUser.id).finally(()=>setLoading(false)); // Load wishlist/cart/orders for that user
-    }else{
-      setLoading(false)
+      if (parsedUser.role === "user") {
+        fetchUserData(parsedUser.id).finally(() => setLoading(false)); // Load wishlist/cart/orders for that user
+      }else {
+      setLoading(false);
+    }
+    } else {
+      setLoading(false);
     }
   }, []);
 
@@ -46,7 +50,10 @@ const AppProvider = ({ children }) => {
   const login = async (userData) => {
     setUser(userData);
     localStorage.setItem("user", JSON.stringify(userData));
-    await fetchUserData(userData.id);
+    if(userData.role==="user"){
+
+      await fetchUserData(userData.id);
+    }
   };
 
   const logout = () => {
@@ -208,7 +215,7 @@ const AppProvider = ({ children }) => {
     if (!item) return;
 
     if (item.quantity === 1) {
-       toast.error("⚠️ Minimum quantity is 1");
+      toast.error("⚠️ Minimum quantity is 1");
     }
 
     try {
@@ -313,7 +320,7 @@ const AppProvider = ({ children }) => {
     decreaseQuantity,
     orders,
     placeOrder,
-    loading
+    loading,
   };
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;

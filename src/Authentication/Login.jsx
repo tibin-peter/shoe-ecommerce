@@ -4,7 +4,6 @@ import axios from "axios";
 import { useApp } from "../Context/useApp";
 import toast from "react-hot-toast";
 
-
 const Login = () => {
   const { login } = useApp(); // get login from context
   const [form, setForm] = useState({ email: "", password: "" });
@@ -18,21 +17,32 @@ const Login = () => {
     e.preventDefault();
 
     try {
-      const res = await axios.get(
-        `http://localhost:3001/users?email=${form.email}&password=${form.password}`
-      );
-      if (res.data.length > 0) {
-        const user = res.data[0];
+      // Fetch both normal users and admins
+      const [usersRes, adminsRes] = await Promise.all([
+        axios.get(`http://localhost:3001/users?email=${form.email}`),
+        axios.get(`http://localhost:3001/admin?email=${form.email}`),
+      ]);
 
-        login(user);
-        toast.success(" ✅Login successfull! ");
-        if (user.role === "admin") navigate("/Dashboard");
-        else navigate("/");
+      const allResults = [...usersRes.data, ...adminsRes.data];
+      const foundUser = allResults.find((u) => u.email === form.email);
+
+      if (foundUser) {
+        // Compare password
+        if (foundUser.password === form.password) {
+          login(foundUser); // store in context/localStorage
+          toast.success("✅ Login successful!");
+
+          // Redirect based on role
+          navigate(foundUser.role === "admin" ? "/Dashboard" : "/");
+        } else {
+          toast.error("❌ Invalid password");
+        }
       } else {
-        toast.error("Invalid email or password ❌");
+        toast.error("❌ Email not found");
       }
     } catch (err) {
       console.error(err);
+      toast.error("⚠️ Something went wrong, please try again");
     }
   };
 
