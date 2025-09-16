@@ -9,12 +9,12 @@ const Products = () => {
   const [products, setProducts] = useState([]);
   const [sort, setSort] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const productsPerPage = 6;
 
   const { wishlist, addToWishlist, addToCart } = useApp();
   const location = useLocation();
 
   const queryParams = new URLSearchParams(location.search);
+  const productsPerPage = 6;
   const category = queryParams.get("category") || "";
   const page = parseInt(queryParams.get("page")) || 1;
 
@@ -53,11 +53,11 @@ const Products = () => {
   const totalPages = Math.ceil(sortedProducts.length / productsPerPage);
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-300 to-gray-700">
+    <div className="min-h-screen bg-gradient-to-b">
       <Navbar />
 
       <div className="container mx-auto px-6 py-12">
-        <h2 className="text-3xl md:text-4xl mt-20 font-extrabold text-center text-yellow-400 mb-10 tracking-wide">
+        <h2 className="text-3xl md:text-4xl mt-20  text-center text-black mb-10 tracking-wide">
           {category ? `${category} Collection` : "Explore All Products"}
         </h2>
 
@@ -75,59 +75,68 @@ const Products = () => {
         </div>
 
         {/* Products Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 ">
-          {currentProducts.map((product) => (
-            <div
-              key={product.id}
-              className="bg-gray-800  rounded-2xl shadow-lg overflow-hidden hover:shadow-yellow-500/40 hover:scale-[1.02] transition duration-300 relative"
-            >
-              {/* Wishlist Icon */}
-              <button
-                onClick={() => addToWishlist(product)}
-                className="absolute top-4 right-4 p-2 rounded-full bg-gray-900 shadow-md hover:bg-yellow-700 transition"
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {currentProducts.length === 0 ? (
+            <p className="text-center text-gray-500">No products found.</p>
+          ) : (
+            currentProducts.map((product) => (
+              <div
+                key={product.id}
+                className="border rounded-lg shadow-md bg-white p-4 flex flex-col relative"
               >
-                <Heart
-                  className={`w-6 h-6 ${
-                    wishlist.some((item) => item.id === product.id)
-                      ? "text-red-500 fill-red-500"
-                      : "text-gray-300"
-                  }`}
+                {/* Wishlist Icon */}
+                <button
+                  onClick={() => addToWishlist(product)}
+                  className="absolute top-4 right-4 p-2 rounded-full bg-gray-900 shadow-md hover:bg-yellow-700 transition"
+                >
+                  <Heart
+                    className={`w-6 h-6 ${
+                      wishlist.some((item) => item.id === product.id)
+                        ? "text-red-500 fill-red-500"
+                        : "text-gray-300"
+                    }`}
+                  />
+                </button>
+
+                {/* Product Image */}
+                <img
+                  src={product.image}
+                  alt={product.name}
+                  className="w-full h-60 object-cover rounded-md mb-4"
                 />
-              </button>
 
-              {/* Product Image */}
-              <img
-                src={product.image}
-                alt={product.name}
-                className="w-full h-70 object-cover"
-              />
-
-              {/* Product Info */}
-              <div className="p-6 text-center">
-                <h3 className="text-lg font-semibold text-white mb-1">
+                {/* Product Info */}
+                <h3 className="text-lg font-semibold text-black text-center">
                   {product.name}
                 </h3>
-                <p className="text-gray-400 text-sm mb-1">${product.price}</p>
-                <p className="text-yellow-400 text-sm mb-4">
-                  ⭐⭐⭐ {product.rating}
+                <p className="text-black text-sm line-clamp-2">
+                  {product.description}
+                </p>
+                <p className="mt-2 text-green-700 font-bold text-center ">
+                  ₹{product.price}
+                </p>
+                <p className="text-yellow-500 text-center">
+                  ⭐ {product.rating}
                 </p>
 
-                <Link
-                  to={`/products/${product.id}`}
-                  className="text-yellow-400 font-medium underline mb-4 block hover:text-yellow-300 transition"
-                >
-                  View Details
-                </Link>
-
-                <button
-                  onClick={() => addToCart(product)}
-                  className="w-full px-5 py-2 bg-yellow-400 text-black font-semibold rounded-lg shadow-md hover:bg-yellow-300 transition"
-                >
-                  Add to Cart
-                </button>
+                {/* Actions */}
+                <div className="flex flex-col gap-2 mt-4">
+                  <Link
+                    to={`/products/${product.id}`}
+                    className="text-blue-600 font-medium underline hover:text-blue-700 transition text-center"
+                  >
+                    View Details
+                  </Link>
+                  <button
+                    onClick={() => addToCart(product)}
+                    className="w-full px-5 py-2 bg-yellow-400 text-black font-semibold rounded-lg shadow-md hover:bg-yellow-300 transition"
+                  >
+                    Add to Cart
+                  </button>
+                </div>
               </div>
-            </div>
-          ))}
+            ))
+          )}
         </div>
 
         {/* Pagination */}

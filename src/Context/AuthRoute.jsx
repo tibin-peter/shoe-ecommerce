@@ -11,7 +11,7 @@ const AuthRoute = ({ children, requireAuth = false, restricted = false, requireR
 
   // Restricted route (like Login/Register) but user is already logged in
   if (restricted && user) {
-    return <Navigate to={user.role === "admin" ? "/Dashboard" : "/"} replace />;
+    return <Navigate to={user.role === "admin" ? "/admin/dashboard" : "/"} replace />;
   }
 
   // Route requires a specific role

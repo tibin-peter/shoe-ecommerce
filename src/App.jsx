@@ -4,7 +4,7 @@ import Login from './Authentication/Login';
 import Registration from './Authentication/Registration';
 import Navbar from './UserComponents/Main/Navbar';
 import Home from './UserComponents/Main/Home';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route,Navigate } from 'react-router-dom';
 import Slides from './UserComponents/Main/Slides';
 import Products from './UserComponents/Products/Products';
 import Logout from './Authentication/Logout';
@@ -15,9 +15,13 @@ import Categories from './UserComponents/Products/Categories';
 import Orders from './UserComponents/OrderandPayment/Orders';
 import Payment from "./UserComponents/OrderandPayment/Payment";
 import Cart from './UserComponents/Products/Cart';
-import Dashboard from './Admin/Dashboard';
 import AuthRoute from './Context/AuthRoute';
 import { Toaster } from "react-hot-toast";
+import MainLayout from "./Admin/MainLayout";
+import Dashboard from "./Admin/Dashboard";
+import AllProducts from "./Admin/AllProducts";
+import AllUsers from "./Admin/AllUsers";
+import AllOrders from "./Admin/AllOrders";
 
 function App() {
   
@@ -46,8 +50,17 @@ function App() {
         <Route path='/Cart' element={<AuthRoute requireAuth><Cart /></AuthRoute>} />
         <Route path='/Orders' element={<AuthRoute requireAuth><Orders /></AuthRoute>} />
 
-        {/* Admin-only route */}
-        <Route path='/Dashboard' element={<AuthRoute requireAuth requireRole="admin"><Dashboard /></AuthRoute>} />
+        
+        {/* Admin routes inside MainLayout */}
+        <Route path="/admin" element={<AuthRoute requireAuth={true} requireRole="admin" ><MainLayout /></AuthRoute>}>
+          {/* default route redirect */}
+          <Route index element={<Navigate to="dashboard" replace />} />
+
+          <Route path="dashboard" element={<Dashboard />} />
+          <Route path="allproducts" element={<AllProducts />} />
+          <Route path="allusers" element={<AllUsers />} />
+          <Route path="allorders" element={<AllOrders />} />
+        </Route>
       </Routes>
     </>
   );

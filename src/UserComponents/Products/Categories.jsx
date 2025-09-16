@@ -1,54 +1,63 @@
 import React from "react";
-import { Link} from "react-router-dom";
-const Categories = () => {
- 
+import { Link } from "react-router-dom";
 
+const Categories = () => {
   return (
-    <div className="max-w-6xl mx-auto ">
-      <h2 className="text-4xl font-bold mb-6 text-center text-black mt-4 ">
-        Shop by Category
+    <div className="max-w-7xl mx-auto px-6 py-12">
+      {/* Title */}
+      <h2 className="text-1xl md:text-4xl  text-center text-black mb-12">
+        Shop By Gender
       </h2>
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+      {/* Categories Grid */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
         {/* Men */}
-        <Link to="/products?category=Men&page=1" className="relative group">
+        <div className="flex flex-col items-center">
           <img
-            src="https://coveti.com/wp-content/uploads/2024/01/688ce0ff248282cdbbd636cff1e460c9.webp"
+            src="https://www.skechers.in/dw/image/v2/BGNZ_PRD/on/demandware.static/-/Sites-skechersin-Library/default/dw60e174bd/Home-Page/Desktop/ITG69566_MRKTG_FALL25_M_SPORT_STAIRS_CONCRETE_W_700-x-H_609-pixels_Only-Model.jpg?sw=500&q=95"
             alt="Men Shoes"
-            
-            className="w-full h-150  object-cover rounded-2xl shadow-md group-hover:opacity-90 transition"
+            className="w-full h-[400px] object-cover rounded-lg shadow-md"
           />
-          <span className="absolute inset-0 flex items-center justify-center text-red-500  text-2xl font-bold bg-black/40 rounded-2xl opacity-0 group-hover:opacity-100 transition">
-            Men
-          </span>
-        </Link>
+          <Link
+            to="/products?category=Men&page=1"
+            className="mt-4 text-lg font-semibold text-gray-800 hover:text-blue-600 transition"
+          >
+            SHOP MEN'S &gt;&gt;
+          </Link>
+        </div>
 
         {/* Women */}
-        <Link to="/products?category=Women&page=1" className="relative group">
+        <div className="flex flex-col items-center">
           <img
-            src="https://www.skechers.in/dw/image/v2/BGNZ_PRD/on/demandware.static/-/Sites-skechersin-Library/default/dw70136452/EOSS/Mobile/24-09-SKECHERS-12215500-MK-400px-x-500px-ANANYA-PINK-HOARDING_CC.jpg?sw=780&q=95"
+            src="https://www.skechers.in/dw/image/v2/BGNZ_PRD/on/demandware.static/-/Sites-skechersin-Library/default/dw746ab1d6/Home-Page/Desktop/Only-Model_ITG69708_MRKTG_F25_W_CC_STEPS_700px-x-609px.jpg?sw=500&q=95"
             alt="Women Shoes"
-            className="w-full h-150 object-cover rounded-2xl shadow-md group-hover:opacity-90 transition"
+            className="w-full h-[400px] object-cover rounded-lg shadow-md"
           />
-          <span className="absolute inset-0 flex items-center justify-center text-red-500 text-2xl font-bold bg-black/40 rounded-2xl opacity-0 group-hover:opacity-100 transition">
-            Women
-          </span>
-        </Link>
+          <Link
+            to="/products?category=Women&page=1"
+            className="mt-4 text-lg font-semibold text-gray-800 hover:text-blue-600 transition"
+          >
+            SHOP WOMEN'S &gt;&gt;
+          </Link>
+        </div>
 
         {/* Kids */}
-        <Link to="/products?category=Kids&page=1" className="relative group">
+        <div className="flex flex-col items-center">
           <img
-            src="https://qwintry.com/ru/file/view/kids-shoes-sale-picture-1.jpg"
+            src="https://www.skechers.in/dw/image/v2/BGNZ_PRD/on/demandware.static/-/Sites-skechersin-Library/default/dw12ea3609/Home-Page/Desktop/Only-Model_ITG66989_SP25_KIDS_G_PIGTAILS_CHECKERS_P_700px-x-609px_V1.jpg?sw=500&q=95"
             alt="Kids Shoes"
-            className="w-full h-150 object-cover rounded-2xl shadow-md group-hover:opacity-90 transition"
+            className="w-full h-[400px] object-cover rounded-lg shadow-md"
           />
-          <span className="absolute inset-0 flex items-center justify-center text-red-500 text-2xl font-bold bg-black/40 rounded-2xl opacity-0 group-hover:opacity-100 transition">
-            Kids
-          </span>
-        </Link>
+          <Link
+            to="/products?category=Kids&page=1"
+            className="mt-4 text-lg font-semibold text-gray-800 hover:text-blue-600 transition"
+          >
+            SHOP KIDS &gt;&gt;
+          </Link>
+        </div>
       </div>
     </div>
   );
 };
 
 export default Categories;
-

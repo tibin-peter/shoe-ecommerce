@@ -41,7 +41,7 @@ const Slides = () => {
   return (
     <div className="relative w-full max-w-6xl mx-auto mt-8 ">
       {/* Heading */}
-      <h2 className="text-2xl md:text-4xl font-bold mb-4 text-center text-black">
+      <h2 className="text-2xl md:text-4xl  mb-4 text-center text-black">
         Trending Now
       </h2>
 

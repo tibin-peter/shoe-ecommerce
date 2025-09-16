@@ -33,7 +33,7 @@ const Login = () => {
           toast.success("✅ Login successful!");
 
           // Redirect based on role
-          navigate(foundUser.role === "admin" ? "/Dashboard" : "/");
+          navigate(foundUser.role === "admin" ? "/admin/dashboard" : "/");
         } else {
           toast.error("❌ Invalid password");
         }
